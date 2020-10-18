@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 
 internal fun <T> WeekViewDisplayable<T>.toResolvedWeekViewEvent(
     context: Context
-) = toWeekViewEvent().resolve(context)
+) = toWeekViewEvent(context).resolve(context)
 
 internal fun <T> WeekViewEvent<T>.resolve(
     context: Context

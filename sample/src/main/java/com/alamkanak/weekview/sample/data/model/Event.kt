@@ -1,6 +1,6 @@
 package com.alamkanak.weekview.sample.data.model
 
-import android.graphics.Color
+import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.style.StrikethroughSpan
@@ -8,6 +8,7 @@ import android.text.style.TypefaceSpan
 import com.alamkanak.weekview.WeekViewDisplayable
 import com.alamkanak.weekview.WeekViewEvent
 import com.alamkanak.weekview.sample.R
+import com.alamkanak.weekview.sample.util.getThemeColor
 import java.util.Calendar
 
 data class Event(
@@ -21,15 +22,25 @@ data class Event(
     private val isCanceled: Boolean
 ) : WeekViewDisplayable<Event> {
 
-    override fun toWeekViewEvent(): WeekViewEvent<Event> {
-        val backgroundColor = if (!isCanceled) color else Color.WHITE
-        val textColor = if (!isCanceled) Color.WHITE else color
-        val borderWidthResId = if (!isCanceled) R.dimen.no_border_width else R.dimen.border_width
+    override fun toWeekViewEvent(context: Context): WeekViewEvent<Event> {
+        val backgroundColor = when {
+            isCanceled -> context.getThemeColor(R.attr.colorSurface)
+            else -> color
+        }
+
+        val textColor = when {
+            isCanceled -> color
+            else -> context.getThemeColor(R.attr.colorSurface)
+        }
 
         val style = WeekViewEvent.Style.Builder()
             .setTextColor(textColor)
             .setBackgroundColor(backgroundColor)
-            .setBorderWidthResource(borderWidthResId)
+            .apply {
+                if (isCanceled) {
+                    setBorderWidthResource(R.dimen.border_width)
+                }
+            }
             .setBorderColor(color)
             .build()
 
