@@ -1512,7 +1512,7 @@ class WeekView @JvmOverloads constructor(
          * @param events The [WeekViewDisplayable] elements that are to be displayed in [WeekView]
          */
         @PublicApi
-        fun submit(events: List<WeekViewDisplayable<T>>) {
+        fun submit(events: List<WeekViewDisplayable>) {
             val viewState = weekView?.viewState ?: return
             eventsProcessor.submit(events, viewState, onFinished = this::updateObserver)
         }
@@ -1544,7 +1544,7 @@ class WeekView @JvmOverloads constructor(
          * @param events The [WeekViewDisplayable] elements that are to be displayed in [WeekView]
          */
         @PublicApi
-        fun submit(events: List<WeekViewDisplayable<T>>) {
+        fun submit(events: List<WeekViewDisplayable>) {
             val viewState = weekView?.viewState ?: return
             eventsProcessor.submit(events, viewState, onFinished = this::updateObserver)
         }
